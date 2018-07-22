@@ -51,12 +51,12 @@ Function Build-MacthingMachine{
                 
 
                 if($g[$currentState][$char] -eq -1){$g[$currentState][$char] = $states++}
-                #Write-Verbose ("" + $g[$currentState][$char])
+
                 $currentState = $g[$currentState][$char]
             }
 
             $out[$currentState]  = ($out[$currentState] -bor (1 -shl $i))
-            #Write-Verbose ("" + $out[$currentState] -bor (1 -shl $i))
+
         }
 
 
@@ -77,7 +77,7 @@ Function Build-MacthingMachine{
 
         while($queue.Count){
             [int]$state = $queue.Dequeue()
-            #Write-Verbose ("" + $state)
+
             for($ch = 0; $ch -lt $MaxCharacters; ++$ch){
                 if($g[$state][$ch] -ne -1){
                     $failure = $f[$state]
@@ -101,7 +101,7 @@ Function Build-MacthingMachine{
          $Global:out = $out
          $Global:g = $g
          $Global:f = $f
-         #$Global:states = $states
+
 
          
     }
@@ -129,7 +129,7 @@ Function Find-NextState{
         $answer = $f[$answer]
     }
 
-    #Write-Verbose ([string]$g[$answer][$ch])
+
     return $g[$answer][$ch]
 
 }
@@ -156,13 +156,12 @@ Function Search-Words{
         if($out[$currentState] -eq 0){continue}
 
         for($h = 0; $h -lt $array.Count; $h++){
-            #Write-Verbose ("" + $out[$currentState]  + " "+ ($out[$currentState] -band (1 -shl $h) ))
-            #Write-Verbose ("" + $currentState + " " +  $out[$currentState])
+
             Write-Verbose ($out[$currentState])
             if ($out[$currentState] -band (1 -shl $h)){ 
-            #Write-Verbose (1 -shl $h)
+
             
-                #Write-Verbose ([string]($out[$currentState] -band (1 -shl $h)))
+
                 
                 Write-Host ("word " + $array[$h] + " appears from " + [string]($i - $array[$h].Length +1) + " to " + $i)
             } 
