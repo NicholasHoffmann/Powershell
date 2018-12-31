@@ -28,11 +28,10 @@ The Location of these monitors must also be the same as the computer.
 The Logon Logs of this computer should be the assigned user, of course there can be exceptions of this.
 
 
-
 Extra checks we can do while we are doing this
 The clients home in the OU structure must be the same as the PC. (Under workstations instead of clients of course)
 The IP address can be used to verify the PC is on the correct floor, these can give a small check on shared PCs. We should track the last few IP addresses to get some statistics between floor hops.
-
+Since Installing software is query based off of AD Members, we can validate what PC's should have 16GB of RAm
 
 
 We would need a database fr this to viable.
@@ -62,3 +61,97 @@ This will be used to extract the Assigned User from Active Directory
 
 
 #>
+
+
+Function Find-FloorByIPAddress {
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True)]
+        $IPAddress
+    )
+
+    #this function incorprates a simple switch case to determine what floor a PC it is on
+    #The numbers we are looking for is the one in XXXs 10.1.XXX.198
+    $Number = $IPAddress.Split[2]
+    $Floor = switch($Number){
+        201{'BCP1'}
+        202{'BCP2'}
+        203{'BCP3'}
+        204{'BCP4'}
+        205{'BCP5'}
+        206{'BCP6'}
+        207{'BCP7'}
+        208{'BCP8'}
+        209{'BCP9'}    
+
+        211{'BCB1'}
+        212{'BCB2'}
+        213{'BCB3'}
+        214{'BCB4'}
+        215{'BCB5'}
+        216{'BCB6'}
+
+        240{'Wireless'}
+
+
+    }
+
+}
+
+
+#This function will read the Logs to get log ons and log offs of a PC.
+Function Get-LoggedOnEvents{
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True)]
+        [string]$ComputerName
+    )
+
+
+
+}
+
+#This function will get the monitor information, serial number etc.
+Function Get-MonitorsInformation{
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True)]
+        [string]$ComputerName
+    )
+    #We can have the PCs we are gathering information from do some of the tasks to save on network and runtimes.
+    $Monitors = Invoke-Command -ComputerName $ComputerName -ScriptBlock {Gwmi -Namespace Root\WMI -Class WMIMonitor}
+
+}
+
+
+#This function will handle the data collection of the Active Directory
+Function Get-ComputerActiveDirectoryData{
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True)]
+        [string]$ComputerName
+    )
+
+
+}
+
+#This function will attempt to get a userID out of the Computers Description
+Function Attempt-UserIDCollection{
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True)]
+        [string]$String,
+        [string[]]$UserIDs
+    )
+
+}
+
+
+Function Generate-UserIDStringArray{
+    [cmdletBinding()]
+    Param(
+        
+    )
+
+    
+}
