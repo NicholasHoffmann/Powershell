@@ -41,7 +41,7 @@ Assigned Department
 
 #>
 
-
+#Type Dynamic
 Function Get-MonitorInformation{
     [cmdletBinding()]
     Param(
@@ -49,8 +49,50 @@ Function Get-MonitorInformation{
         [string]$ComputerName
     )
 
-    $Command
-    $Monitors = 
+    $Command  = {
+        $WMIMonitor = GWMI -Namespace Root\WMI -Class WMIMonitorID
+        $MonitorInformation = @()
+        $Count = 1
+        Foreach($Instance in $WMIMonitor){
+            $Object = New-object -TypeName PSobject -Property @{
+                ManufacturerName = ''
+                ProductCodeID = ''
+                SerialNumberID = ''
+                UserFriendlyName = ''
+                WeekOfManufacture = ''
+                YearOfManufacture = ''
+                Count = 0
+                ComputerName = $ComputerName
+            }
+            $Instance.ManufacturerName | %{$Object.ManufacturerName += [char]$_}
+            $Instance.ProductCodeID | %{$Object.ProductCodeID += [char]$_}
+            $Instance.SerialNumberID | %{$Object.SerialNumberID += [char]$_}
+            $Instance.UserFriendlyName | %{$Object.UserFriendlyName += [char]$_}
+            $Object.WeekOfManufacture = $Instance.WeekOfManufacture
+            $Object.YearOfManufacture = $Instance.YearOfManufacture
+            $Object.Count = $Count
+            $Count++
+
+            $MonitorInformation += $Object
+
+        }
+
+        return $MonitorInformation
+    }
+
+    return Invoke-Command -ComputerName $ComputerName -ScriptBlock $Command
+}
+
+#Type Static
+Function Get-MacAddresses{
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True)]
+        $ComputerName
+    )
+
+    $NetworkAdapter = Gwmi -Class Win32_NetworkAdapter | Where {$_.Speed -ne $null}
+    
 }
 
 <#
