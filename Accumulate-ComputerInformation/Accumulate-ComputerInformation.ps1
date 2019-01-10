@@ -62,7 +62,7 @@ Function Get-MonitorInformation{
                 WeekOfManufacture = ''
                 YearOfManufacture = ''
                 Count = 0
-                ComputerName = $ComputerName
+                ComputerName = $ENV:ComputerName
             }
             $Instance.ManufacturerName | %{$Object.ManufacturerName += [char]$_}
             $Instance.ProductCodeID | %{$Object.ProductCodeID += [char]$_}
@@ -72,6 +72,8 @@ Function Get-MonitorInformation{
             $Object.YearOfManufacture = $Instance.YearOfManufacture
             $Object.Count = $Count
             $Count++
+
+
 
             $MonitorInformation += $Object
 

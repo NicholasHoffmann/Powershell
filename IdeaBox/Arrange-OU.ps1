@@ -9,11 +9,35 @@ When I get the Aho Corasick Algorighthm working I will get that included in here
 
 #>
 
+
+Function Translate-OU{
+    #Basic function that turns the comma seperated OU in distinguished name to an easier format \ \ \
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True)]
+        $DistinguishedName
+    )
+
+    $Str = $DistinguishedName.SubString($DistinguishedName.IndexOf("OU=")-1)
+    #$Str = $Str.Substring(0,$Str.IndexOf("DC=")-1)
+    $Str = $Str.Replace(",DC=",".")
+    $Str = $Str.Replace(",OU=","\")
+    $str = $Str.Substring(1)
+
+    Return $Str
+
+}
+
+
+
+
 $ScriptPath = (Join-Path -Path $PSScriptRoot -ChildPath Get-StandardADAccounts.ps1) 
 $arguments = 'Office, Title'
 
 $Users = Invoke-Expression "$ScriptPath $arguments"
 $Users = $Users | Sort-Object SamAccountName
+
+
 
 
 
