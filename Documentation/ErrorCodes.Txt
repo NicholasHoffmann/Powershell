@@ -1,0 +1,4 @@
+0 = No Errors
+1 = Could not Ping
+2 = Error getting Querying WMI
+3 = Windows Remote Management Error
