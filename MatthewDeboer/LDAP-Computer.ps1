@@ -1,4 +1,4 @@
-﻿#original code from Mdedeboer
+﻿
 Function LDAP-Computer{
     [cmdletBinding()]
     Param(
