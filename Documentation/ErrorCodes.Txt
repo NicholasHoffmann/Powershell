@@ -2,3 +2,4 @@
 1 = Could not Ping
 2 = Error getting Querying WMI
 3 = Windows Remote Management Error
+4 = Error Connecting to drive
