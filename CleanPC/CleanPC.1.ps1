@@ -359,13 +359,14 @@ Function Measure-FolderSize{
     [cmdletBinding()]
     Param(
         [Parameter(Mandatory = $True, ValueFromPipeline = $True)]
-        [pbject]$Path
+        [object]$Path
 
     )
     Begin{}
     Process{
-        size = Get-ChildItem -Path $Path | Measure-Object -Property Length -sum | ForEach-Object {$_.Sum/[math4,3)}
+        $size = Get-ChildItem -Path $Path -Recurse | Measure-Object -Property Length -sum | ForEach-Object {$_.Sum/[math]::Pow(1024,3)}
     }
+
     End{
         Return $size
     }
