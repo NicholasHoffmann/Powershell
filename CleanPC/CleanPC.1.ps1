@@ -355,6 +355,23 @@ Function Find-FolderSize ([string]$FolderPath){
     }
 }
 
+Function Measure-FolderSize{
+    [cmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $True, ValueFromPipeline = $True)]
+        [pbject]$Path
+
+    )
+    Begin{}
+    Process{
+        size = Get-ChildItem -Path $Path | Measure-Object -Property Length -sum | ForEach-Object {$_.Sum/[math4,3)}
+    }
+    End{
+        Return $size
+    }
+    
+}
+
 # Function that takes a string and outputs it to the console and a txt file stored in $textColor
 Function Write-ToHostAndFile ([string]$String, [string]$textColor){
     Write-host $string -ForegroundColor $textColor
