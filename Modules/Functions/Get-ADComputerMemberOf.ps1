@@ -16,6 +16,7 @@ Function Get-ADComputerMemberOf{
                 $TempStr = $Member.split(",")[0].TrimStart("CN=")
                 $FormattedMembers += $TempStr
             }
+            $FormattedMembers = $FormattedMembers | Sort-Object
             Return $FormattedMembers
         }
         Catch{
