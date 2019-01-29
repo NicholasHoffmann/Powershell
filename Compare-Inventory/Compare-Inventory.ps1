@@ -63,6 +63,125 @@ This will be used to extract the Assigned User from Active Directory
 #>
 
 
+
+Function Compare-Inventory{
+    #Main Function
+    $EmptyPropertyValue = $null
+    $MainProperties = @{
+        #Basic Computer Properties
+        Computer = @{
+            Name = 0
+            IPAddress = $EmptyPropertyValue
+        }
+
+        #WMI Logon information
+        UserProfile = @()
+
+        #Snow Properties
+        Snow = @{
+            UserID = $EmptyPropertyValue
+            UserName = $EmptyPropertyValue
+            Location = $EmptyPropertyValue
+            Department = $EmptyPropertyValue
+            Exists = $false
+        }
+
+        #ActiveDirectory
+        AD = @{
+            OperatingSystem = $EmptyPropertyValue
+            Description = $EmptyPropertyValue
+            OU = $EmptyPropertyValue
+            MemberOF = $EmptyPropertyValue
+            Exists = $false
+        }
+
+        #WMI Monitor Instances
+        Monitors = @()
+
+        $ADUser = @{
+            Exists = $false
+
+        }
+    }
+
+}
+
+New-Object psobject -Property @{
+    computer = (New-Object psobject -Property @{
+        Name = $ComputerNames[$i]
+        Exists = $false
+        OperatingSystem = "n/a"
+        Description = "n/a"
+        IPFloor = "n/a"
+        IPAddress = "n/a"
+    
+        LastLogons = @()
+
+        snow = (New-Object psObject -Property @{
+            UserID = "n/a"
+            UserName = "n/a"
+            Location = "n/a"
+            Department = "n/a"
+            exists = $False
+        })
+    
+        Monitor1 = (New-Object psObject -Property @{
+            SN = "n/a"
+            Manufacturer = "n/a"
+            Model = "n/a"
+            exists = $false
+            ErrorReason = "n/a"
+            snow = (New-Object psObject -Property @{
+                User = "n/a"
+                Location = "n/a"
+                AssetStatus = "n/a"
+                })
+            })
+
+        Monitor2 = (New-Object psObject -Property @{
+            SN = "n/a"
+            Manufacturer = "n/a"
+            Model = "n/a"
+            exists = $false
+            ErrorReason = "n/a"
+            snow = (New-Object psObject -Property @{
+                User = "n/a"
+                Location = "n/a"
+
+                AssetStatus = "n/a"
+                })
+            })
+   
+        Monitor3 = (New-Object psObject -Property @{
+            SN = "n/a"
+            Manufacturer = "n/a"
+            Model = "n/a"
+            exists = $false
+            ErrorReason = "n/a"
+            snow = (New-Object psObject -Property @{
+                User = "n/a"
+                Location = "n/a"
+                AssetStatus = "n/a"
+                })
+            })
+        #Close Computer Object
+        })
+
+    User = (New-Object psobject -Property @{
+        Name = "n/a"
+        Enabled = "n/a"
+        Location = "n/a"
+        Title = "n/a"
+        Exists = $false
+        LastLogon = Get-Date 0
+    
+        #Close User Object
+        })
+    index = $i
+
+#Close Object Array
+}
+
 Function Find-FloorByIPAddress {
     [cmdletBinding()]
     Param(
@@ -99,59 +218,3 @@ Function Find-FloorByIPAddress {
 }
 
 
-#This function will read the Logs to get log ons and log offs of a PC.
-Function Get-LoggedOnEvents{
-    [cmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $True)]
-        [string]$ComputerName
-    )
-
-
-
-}
-
-#This function will get the monitor information, serial number etc.
-Function Get-MonitorsInformation{
-    [cmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $True)]
-        [string]$ComputerName
-    )
-    #We can have the PCs we are gathering information from do some of the tasks to save on network and runtimes.
-    $Monitors = Invoke-Command -ComputerName $ComputerName -ScriptBlock {Gwmi -Namespace Root\WMI -Class WMIMonitor}
-
-}
-
-
-#This function will handle the data collection of the Active Directory
-Function Get-ComputerActiveDirectoryData{
-    [cmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $True)]
-        [string]$ComputerName
-    )
-
-
-}
-
-#This function will attempt to get a userID out of the Computers Description
-Function Attempt-UserIDCollection{
-    [cmdletBinding()]
-    Param(
-        [Parameter(Mandatory = $True)]
-        [string]$String,
-        [string[]]$UserIDs
-    )
-
-}
-
-
-Function Generate-UserIDStringArray{
-    [cmdletBinding()]
-    Param(
-        
-    )
-
-    
-}
