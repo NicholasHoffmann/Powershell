@@ -75,7 +75,10 @@ Function Compare-Inventory{
         }
 
         #WMI Logon information
-        UserProfile = @()
+        WMI = @{
+            UserProfile = @()
+            Monitors = @()
+        }
 
         #Snow Properties
         Snow = @{
@@ -94,93 +97,20 @@ Function Compare-Inventory{
             MemberOF = $EmptyPropertyValue
             Exists = $false
         }
+        
 
-        #WMI Monitor Instances
-        Monitors = @()
-
-        $ADUser = @{
+        #Active Directory user information
+        ADUser = @{
             Exists = $false
-
+            UserID = $EmptyPropertyValue
+            Location = $EmptyPropertyValue
+            UserName = $EmptyPropertyValue
+            Department = $EmptyPropertyValue
         }
     }
 
 }
 
-New-Object psobject -Property @{
-    computer = (New-Object psobject -Property @{
-        Name = $ComputerNames[$i]
-        Exists = $false
-        OperatingSystem = "n/a"
-        Description = "n/a"
-        IPFloor = "n/a"
-        IPAddress = "n/a"
-    
-        LastLogons = @()
-
-        snow = (New-Object psObject -Property @{
-            UserID = "n/a"
-            UserName = "n/a"
-            Location = "n/a"
-            Department = "n/a"
-            exists = $False
-        })
-    
-        Monitor1 = (New-Object psObject -Property @{
-            SN = "n/a"
-            Manufacturer = "n/a"
-            Model = "n/a"
-            exists = $false
-            ErrorReason = "n/a"
-            snow = (New-Object psObject -Property @{
-                User = "n/a"
-                Location = "n/a"
-                AssetStatus = "n/a"
-                })
-            })
-
-        Monitor2 = (New-Object psObject -Property @{
-            SN = "n/a"
-            Manufacturer = "n/a"
-            Model = "n/a"
-            exists = $false
-            ErrorReason = "n/a"
-            snow = (New-Object psObject -Property @{
-                User = "n/a"
-                Location = "n/a"
-
-                AssetStatus = "n/a"
-                })
-            })
-   
-        Monitor3 = (New-Object psObject -Property @{
-            SN = "n/a"
-            Manufacturer = "n/a"
-            Model = "n/a"
-            exists = $false
-            ErrorReason = "n/a"
-            snow = (New-Object psObject -Property @{
-                User = "n/a"
-                Location = "n/a"
-                AssetStatus = "n/a"
-                })
-            })
-        #Close Computer Object
-        })
-
-    User = (New-Object psobject -Property @{
-        Name = "n/a"
-        Enabled = "n/a"
-        Location = "n/a"
-        Title = "n/a"
-        Exists = $false
-        LastLogon = Get-Date 0
-    
-        #Close User Object
-        })
-    index = $i
-
-#Close Object Array
-}
 
 Function Find-FloorByIPAddress {
     [cmdletBinding()]
