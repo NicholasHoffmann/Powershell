@@ -47,4 +47,3 @@ Function Measure-OutlookArchive{
         Return $Users
     }
 }
-Measure-OutlookArchive 'ffxdby1'
