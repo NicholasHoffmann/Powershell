@@ -38,12 +38,13 @@ Function Measure-OutlookArchive{
             }
         }
         Else{
-            Write-Host "was not able to ping"
+            Write-Host "was not able to ping $computerName"
             $Result = 1
         }
         Write-Verbose "Error code $Result"
+        Return $Users
     }
     End{
-        Return $Users
+        
     }
 }
