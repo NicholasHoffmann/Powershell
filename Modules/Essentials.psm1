@@ -55,7 +55,7 @@ Function Import-SnowCSV{
 
     if($ExtraProperties){
         Write-Verbose "Extra Properties $ExtraProperties Specified"
-        $Objects | Add-Member -NotePropertyMembers $ExtraProperties
+        $Objects | Add-Member -NotePropertyMembers $ExtraProperties -Force
     }
     ELse{
         Write-Verbose "No Extra Properties Specified"    
