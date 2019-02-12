@@ -67,22 +67,3 @@
         
 }
 
-
-$Data = "ccwhite	FGZDBY1
-jesmith	2GV7GQ1
-dbenjami	720FWR1
-rnajmedd	2GW6GQ1
-dtanasic	5QHN6Y1
-jbarclay	6H3HHS1
-msharma	J6LP7V1
-jdavison	FFWDBY1
-kchan	J6CS7V1
-btaylor	5QGP6Y1
-okorol	725CWR1".split("`n").trim()
-
-Foreach($D in $Data){
-    $UserName = $D.split("`t")[0]
-    $ComputerName = $D.split("`t")[1]
-    Backup-UserFilesForTransfer -ComputerName $ComputerName -UserName $UserName
-
-}
